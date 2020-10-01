@@ -13,9 +13,9 @@ namespace CollectionMaster.Api.Controllers
     {
         private readonly IMusicService _musicService;
 
-        public MusicController()
+        public MusicController(IMusicService musicService)
         {
-            _musicService = new MusicService();
+            _musicService = musicService;
         }
 
         [HttpGet("")]

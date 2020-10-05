@@ -29,7 +29,7 @@ namespace CollectionMaster.Api.Services
             return _reposotory.FirstOrDefault(p => p.Id == id);
         }
 
-        public IEnumerable<MusicAlbum> GetAlbum(string search)
+        public IEnumerable<MusicAlbum> GetAlbums(string search)
         {
             var filter = search.ToLower();
             return _reposotory.Where(p => p.Title.ToLower().Contains(filter) || p.Singer.ToLower().Contains(filter));

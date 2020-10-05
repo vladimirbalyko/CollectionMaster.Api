@@ -1,4 +1,4 @@
-﻿namespace CollectionMaster.DataAccess.EF.Model.Enums
+﻿namespace CollectionMaster.DataAccess.EF.Models.Enums
 {
     public enum AlbumType : byte
     {

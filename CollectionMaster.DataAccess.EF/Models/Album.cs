@@ -1,6 +1,6 @@
-﻿using CollectionMaster.DataAccess.EF.Model.Enums;
+﻿using CollectionMaster.DataAccess.EF.Models.Enums;
 
-namespace CollectionMaster.DataAccess.EF.Model
+namespace CollectionMaster.DataAccess.EF.Models
 {
     public class Album
     {

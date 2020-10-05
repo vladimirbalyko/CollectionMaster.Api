@@ -7,8 +7,8 @@ namespace CollectionMaster.Api.Services
     public interface IMusicService
     {
         IEnumerable<MusicAlbum> GetAlbums();
+        IEnumerable<MusicAlbum> GetAlbums(string search);
         MusicAlbum GetAlbum(int id);
-        IEnumerable<MusicAlbum> GetAlbum(string search);
         bool Add(MusicAlbum album);
         bool Delete(int id);
     }

@@ -1,4 +1,4 @@
-﻿using CollectionMaster.DataAccess.EF.Model;
+﻿using CollectionMaster.DataAccess.EF.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;

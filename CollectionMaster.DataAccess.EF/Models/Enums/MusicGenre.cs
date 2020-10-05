@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CollectionMaster.DataAccess.EF.Model.Enums
+namespace CollectionMaster.DataAccess.EF.Models.Enums
 {
     [Flags]
     public enum MusicGenre : long

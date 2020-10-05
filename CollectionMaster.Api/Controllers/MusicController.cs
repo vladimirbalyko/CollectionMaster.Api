@@ -31,9 +31,9 @@ namespace CollectionMaster.Api.Controllers
         }
 
         [HttpGet("{search}")]
-        public IEnumerable<MusicAlbum> GetAlbum(string search)
+        public IEnumerable<MusicAlbum> GetAlbums(string search)
         {
-            return _musicService.GetAlbum(search);
+            return _musicService.GetAlbums(search);
         }
     }
 }

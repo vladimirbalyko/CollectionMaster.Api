@@ -2,61 +2,87 @@
 using System.Linq;
 
 using CollectionMaster.Api.Models;
+using CollectionMaster.DataAccess.EF.Models;
+using CollectionMaster.DataAccess.EF.Repository;
 
 namespace CollectionMaster.Api.Services
 {
     public class MusicService : IMusicService
     {
-        private IEnumerable<MusicAlbum> _reposotory;
+        private readonly ICollectionMasterRepository _collectionRepository;
 
-        public MusicService()
+        public MusicService(ICollectionMasterRepository collectionRepository)
         {
-            Initialize();
+            _collectionRepository = collectionRepository;
         }
 
-        public bool Add(MusicAlbum album)
+        public void Add(MusicAlbum album)
         {
-            throw new System.NotImplementedException();
+            // TODO: Add Auto Mapper
+            var newAlbum = new Album
+            {
+                Name = album.Title,
+                Singer = album.Singer,
+                Year = album.Year,
+                Description = album.Description,
+                Logo = album.Logo,
+            };
+            _collectionRepository.InsertAlbum(newAlbum);
+            _collectionRepository.Save();
         }
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            _collectionRepository.DeleteAlbum(id);
+            _collectionRepository.Save();
         }
 
         public MusicAlbum GetAlbum(int id)
         {
-            return _reposotory.FirstOrDefault(p => p.Id == id);
+            var album = _collectionRepository.GetAlbum(id);
+
+            return album != null
+                ? new MusicAlbum
+                {
+                    Id = album.AlbumId,
+                    Title = album.Name,
+                    Singer = album.Singer,
+                    Year = album.Year,
+                    Description = album.Description,
+                    Logo = album.Logo
+                } : null;
         }
 
         public IEnumerable<MusicAlbum> GetAlbums(string search)
         {
-            var filter = search.ToLower();
-            return _reposotory.Where(p => p.Title.ToLower().Contains(filter) || p.Singer.ToLower().Contains(filter));
+            var result = _collectionRepository.GetAlbums(search);
+            return result.Select(album => new MusicAlbum
+            {
+                Id = album.AlbumId,
+                Title = album.Name,
+                Singer = album.Singer,
+                Year = album.Year,
+                Description = album.Description,
+                Logo = album.Logo
+            });
         }
 
         public IEnumerable<MusicAlbum> GetAlbums()
         {
-            return _reposotory;
-        }
+            var albums = _collectionRepository.GetAlbums();
 
-        private void Initialize()
-        {
-            _reposotory = new List<MusicAlbum>
+            foreach (var album in albums)
             {
-                new MusicAlbum
+                yield return new MusicAlbum
                 {
-                    Id = 1,
-                    Title = "Never mind",
-                    Singer = "Nirvana"
-                },
-                new MusicAlbum
-                {
-                    Id = 2,
-                    Title = "Черный альбом",
-                    Singer = "Кино"
-                }
-            };
+                    Id = album.AlbumId,
+                    Title = album.Name,
+                    Singer = album.Singer,
+                    Year = album.Year,
+                    Description = album.Description,
+                    Logo = album.Logo
+                };
+            }
         }
     }
 }

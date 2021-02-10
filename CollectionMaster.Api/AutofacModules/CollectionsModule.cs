@@ -1,6 +1,8 @@
 ﻿using Autofac;
 
 using CollectionMaster.Api.Services;
+using CollectionMaster.DataAccess.EF.Context;
+using CollectionMaster.DataAccess.EF.Repository;
 
 namespace CollectionMaster.Api.AutofacModules
 {
@@ -9,6 +11,8 @@ namespace CollectionMaster.Api.AutofacModules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<MusicService>().As<IMusicService>();
+            builder.Register(c => new CollectionMasterRepository(new CollectionMasterContext()))
+                .As<ICollectionMasterRepository>();
         }
     }
 }

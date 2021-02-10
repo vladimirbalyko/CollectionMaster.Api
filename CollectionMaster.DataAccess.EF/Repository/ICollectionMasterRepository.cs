@@ -1,7 +1,8 @@
-﻿using CollectionMaster.DataAccess.EF.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
+
+using CollectionMaster.DataAccess.EF.Models;
 
 namespace CollectionMaster.DataAccess.EF.Repository
 {
@@ -12,7 +13,9 @@ namespace CollectionMaster.DataAccess.EF.Repository
         Album GetAlbum(int id);
         void InsertAlbum(Album album);
         void DeleteAlbum(int id);
+        void DeleteAlbum(Album album);
         void UpdateAlbum(Album album);
         void Save();
+        Task<int> SaveAsync();
     }
 }

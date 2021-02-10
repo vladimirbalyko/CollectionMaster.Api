@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 using CollectionMaster.DataAccess.EF.Context;
 using CollectionMaster.DataAccess.EF.Models;
+using System.Threading.Tasks;
 
 namespace CollectionMaster.DataAccess.EF.Repository
 {
@@ -51,9 +52,19 @@ namespace CollectionMaster.DataAccess.EF.Repository
             _context.Albums.Remove(album);
         }
 
+        public void DeleteAlbum(Album album)
+        {
+            _context.Albums.Remove(album);
+        }
+
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public async Task<int> SaveAsync()
+        {
+            return await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;

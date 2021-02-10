@@ -36,6 +36,7 @@ namespace CollectionMaster.DataAccess.EF.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Album>().Property(p => p.AlbumId).ValueGeneratedOnAdd();
         }
 
         //entities

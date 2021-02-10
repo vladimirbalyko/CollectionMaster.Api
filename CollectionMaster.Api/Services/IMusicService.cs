@@ -9,7 +9,7 @@ namespace CollectionMaster.Api.Services
         IEnumerable<MusicAlbum> GetAlbums();
         IEnumerable<MusicAlbum> GetAlbums(string search);
         MusicAlbum GetAlbum(int id);
-        bool Add(MusicAlbum album);
-        bool Delete(int id);
+        void Add(MusicAlbum album);
+        void Delete(int id);
     }
 }

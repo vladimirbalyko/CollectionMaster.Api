@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using CollectionMaster.Api.Models;
 using CollectionMaster.Api.Services;
+using System.Threading.Tasks;
 
 namespace CollectionMaster.Api.Controllers
 {
@@ -34,6 +35,33 @@ namespace CollectionMaster.Api.Controllers
         public IEnumerable<MusicAlbum> GetAlbums(string search)
         {
             return _musicService.GetAlbums(search);
+        }
+
+        [HttpPost]
+        public ActionResult<MusicAlbum> Add([FromBody] MusicAlbum album)
+        {
+            if (album == null)
+            {
+                return BadRequest();
+            }
+
+            _musicService.Add(album);
+
+            return CreatedAtAction(nameof(GetAlbum), new { id = album.Id, controller = "Music" }, album);
+        }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult<MusicAlbum> Delete(int id)
+        {
+            var album = _musicService.GetAlbum(id);
+            if (album == null)
+            {
+                return NotFound();
+            }
+
+            _musicService.Delete(id);
+
+            return album;
         }
     }
 }

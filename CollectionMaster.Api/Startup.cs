@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using CollectionMaster.Api.AutofacModules;
+using AutoMapper;
+using CollectionMaster.Api.AutoMapper;
 
 namespace CollectionMaster.Api
 {
@@ -29,6 +31,14 @@ namespace CollectionMaster.Api
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
+
+            // Auto Mapper Configurations
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // ConfigureContainer is where you can register things directly

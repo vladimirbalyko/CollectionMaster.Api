@@ -10,7 +10,7 @@
 
         public int? Year { get; set; }
 
-        //public AlbumType Type { get; set; }
+        public int Type { get; set; }
 
         public string Logo { get; set; }
 

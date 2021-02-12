@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using AutoMapper;
+
 using CollectionMaster.Api.Models;
 using CollectionMaster.DataAccess.EF.Models;
 using CollectionMaster.DataAccess.EF.Repository;
@@ -10,23 +12,18 @@ namespace CollectionMaster.Api.Services
     public class MusicService : IMusicService
     {
         private readonly ICollectionMasterRepository _collectionRepository;
+        private readonly IMapper _mapper;
 
-        public MusicService(ICollectionMasterRepository collectionRepository)
+        public MusicService(ICollectionMasterRepository collectionRepository, IMapper mapper)
         {
             _collectionRepository = collectionRepository;
+            _mapper = mapper;
         }
 
         public void Add(MusicAlbum album)
         {
-            // TODO: Add Auto Mapper
-            var newAlbum = new Album
-            {
-                Name = album.Title,
-                Singer = album.Singer,
-                Year = album.Year,
-                Description = album.Description,
-                Logo = album.Logo,
-            };
+            var newAlbum = _mapper.Map<Album>(album);
+
             _collectionRepository.InsertAlbum(newAlbum);
             _collectionRepository.Save();
         }
@@ -41,30 +38,16 @@ namespace CollectionMaster.Api.Services
         {
             var album = _collectionRepository.GetAlbum(id);
 
-            return album != null
-                ? new MusicAlbum
-                {
-                    Id = album.AlbumId,
-                    Title = album.Name,
-                    Singer = album.Singer,
-                    Year = album.Year,
-                    Description = album.Description,
-                    Logo = album.Logo
-                } : null;
+            var musicAlbum = _mapper.Map<MusicAlbum>(album);
+
+            return album != null ? musicAlbum : null;
         }
 
         public IEnumerable<MusicAlbum> GetAlbums(string search)
         {
             var result = _collectionRepository.GetAlbums(search);
-            return result.Select(album => new MusicAlbum
-            {
-                Id = album.AlbumId,
-                Title = album.Name,
-                Singer = album.Singer,
-                Year = album.Year,
-                Description = album.Description,
-                Logo = album.Logo
-            });
+
+            return result.Select(album => _mapper.Map<MusicAlbum>(album));
         }
 
         public IEnumerable<MusicAlbum> GetAlbums()
@@ -73,15 +56,7 @@ namespace CollectionMaster.Api.Services
 
             foreach (var album in albums)
             {
-                yield return new MusicAlbum
-                {
-                    Id = album.AlbumId,
-                    Title = album.Name,
-                    Singer = album.Singer,
-                    Year = album.Year,
-                    Description = album.Description,
-                    Logo = album.Logo
-                };
+                yield return _mapper.Map<MusicAlbum>(album);
             }
         }
     }

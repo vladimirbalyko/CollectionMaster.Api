@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 using CollectionMaster.Api.Models;
 using CollectionMaster.Api.Services;
-using System.Threading.Tasks;
 
 namespace CollectionMaster.Api.Controllers
 {
